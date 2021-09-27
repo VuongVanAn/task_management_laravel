@@ -15,7 +15,7 @@ let avatar = document.getElementById('avatar');
 
 let colorIndex = 0;
 
-if (!avatar.getAttribute('data-avatar') == "") {
+if (!avatar.getAttribute('data-avatar') === "") {
     avatar.firstElementChild.innerHTML = "";
     avatar.style.background = "url('/assets/avatars/" + avatar.getAttribute('data-avatar') + "')";
     avatar.style.backgroundSize = "cover";
@@ -57,7 +57,7 @@ function renderBoard(boardId, boardName) {
 
     newBoardControl.addEventListener('click', function(e) {
         e.preventDefault();
-        if (popupAction.getAttribute('data-id-board') == boardId) {
+        if (popupAction.getAttribute('data-id-board') === boardId) {
             popupAction.className = "popup-action hide";
             popupAction.setAttribute('data-id-board', "");
         } else {
@@ -81,7 +81,7 @@ function updateBoard(boardId, boardName) {
 }
 
 newBoardBtn.addEventListener('click', function() {
-    saveBoardBtn.innerHTML = 'Create Board';
+    saveBoardBtn.innerHTML = 'Tạo bảng';
     if (popup.classList.contains('hide')) {
         popup.classList.toggle('hide');
         inputNameBoard.focus();
@@ -102,7 +102,7 @@ function setInputText(title) {
 
 changeTitleBtn.addEventListener('click', function() {
     popupAction.classList.add('hide');
-    saveBoardBtn.innerHTML = 'Update Board';
+    saveBoardBtn.innerHTML = 'Cập nhật bảng';
     handleAPI("/boards/" + popupAction.getAttribute('data-id-board'), setTokenToData("", ""), "GET", "board");
     if (popup.classList.contains('hide')) {
         if (inputNameBoard.value != null) {
@@ -125,8 +125,8 @@ changeTitleBtn.addEventListener('click', function() {
 saveBoardBtn.addEventListener('click', function(e) {
     e.preventDefault();
     let id = popupAction.getAttribute('data-id-board');
-    if (inputNameBoard.value != "") {
-        if (id != null) {
+    if (inputNameBoard.value) {
+        if (id) {
             handleAPI("/boards/" + id, setTokenToData("title", inputNameBoard.value), "PUT", "board");
             popup.classList.toggle('hide');
         } else {
@@ -214,12 +214,12 @@ function handleAPI(url, data, method, type) {
         type: method,
         data: data,
         success: function(response) {
-            //Xử lý các truy vấn vơis bảng
-            if (type == "board") {
+            //Xử lý các truy vấn với bảng
+            if (type === BOARD) {
                 switch (method) {
-                    case "GET":
+                    case GET:
                         let splitUrl = url.split('/');
-                        if (splitUrl[2] != "") {
+                        if (splitUrl[2] !== "") {
                             setInputText(response[0].title);
                         } else {
                             for (let i = 0; i < response.length; i++) {
@@ -227,22 +227,22 @@ function handleAPI(url, data, method, type) {
                             }
                         }
                         break;
-                    case "POST":
+                    case POST:
                         renderBoard(response.id, response.title);
-                        showAlertMessage("Tạo bảng thành công!", true);
+                        showAlertMessage(ADD_BOARD_SUCCESS, true);
                         break;
-                    case "PUT":
+                    case PUT:
                         updateBoard(response.id, response.title);
-                        showAlertMessage("Cập nhật thành công!", true);
+                        showAlertMessage(UPDATE_BOARD_SUCCESS, true);
                         break;
-                    case "DELETE":
+                    case DELETE:
                         deleteBoard();
-                        showAlertMessage("Xóa thành công!", true);
+                        showAlertMessage(DELETE_BOARD_SUCCESS, true);
                         break;
                 }
-            } else if (type == "user") {
+            } else if (type === USER) {
                 switch (method) {
-                    case "POST":
+                    case POST:
                         console.log(response);
                         avatar.setAttribute("data-avatar", response.avatar);
                         break;

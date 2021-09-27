@@ -54,7 +54,7 @@ textarea {
     border: none;
     border-radius: 3px;
     overflow-wrap: break-word;
-    resize: none;
+    /*resize: none;*/
     overflow: hidden;
     padding: 8px 12px;
     width: 100%;
@@ -117,7 +117,7 @@ div {
 
 .nav-search {
     height: 80%;
-    width: 180px;
+    /*width: 180px;*/
     width: fit-content;
     display: flex;
     align-items: center;
@@ -160,7 +160,7 @@ div {
 .member-badge {
     min-width: 32px;
     height: 32px;
-    background-color: rgba(9, 30, 66, .04);
+    /*background-color: rgba(9, 30, 66, .04);*/
     margin-right: 5px;
     font-size: 12px;
     font-weight: 700;
@@ -193,7 +193,7 @@ div {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgb(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
     padding: 8px;
@@ -461,6 +461,7 @@ div {
 
 .hide-alert {
     animation: hide_slide 1s ease forwards;
+    display: none;
 }
 
 @keyframes show_slide {
@@ -500,7 +501,7 @@ div {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgb(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-delete {
@@ -570,86 +571,56 @@ div {
 
 /* style for images */
 
-.background-content {
-    background: url('../img/trees.png');
+.background-content,
+.background-1, .bg0,
+.bg1, .bg2, .bg3, .bg4, .bg5,
+.bg6, .bg6, .bg7, .bg8, .bg9 {
+    background-image: url('../img/trees.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .background-1 {
-    background: url('../img/bg1.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg1.jpg');
 }
 
 .bg0 {
-    background: url('../img/bg0.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg0.jpg');
 }
 
 .bg1 {
-    background: url('../img/bg1.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg1.jpg');
 }
 
 .bg2 {
-    background: url('../img/bg2.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg2.jpg');
 }
 
 .bg3 {
-    background: url('../img/bg3.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg3.jpg');
 }
 
 .bg4 {
-    background: url('../img/bg4.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg4.jpg');
 }
 
 .bg5 {
-    background: url('../img/bg5.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg5.jpg');
 }
 
 .bg6 {
-    background: url('../img/bg6.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg6.jpg');
 }
 
 .bg7 {
-    background: url('../img/bg7.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg7.jpg');
 }
 
 .bg8 {
-    background: url('../img/bg8.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg8.jpg');
 }
 
 .bg9 {
-    background: url('../img/bg9.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('../img/bg9.jpg');
 }

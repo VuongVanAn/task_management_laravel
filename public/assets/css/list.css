@@ -199,9 +199,9 @@
     margin-bottom: 4px;
     /* padding: 3px 8px; */
     height: 40px;
-    width: 98%;
+    width: 100%;
     font-size: 14px;
-    line-height: 18px;
+    line-height: 24px;
     box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
 }
 
@@ -213,9 +213,9 @@
     line-height: 32px;
     text-align: center;
     outline: none;
-    width: 80px;
+    width: 64px;
     height: 32px;
-    border-radius: 5px;
+    border-radius: 3px;
     font-size: 14px;
 }
 
@@ -275,7 +275,7 @@
 }
 
 .list-add-btn {
-    width: 90px;
+    width: 64px;
     height: 32px;
     background-color: var(--dark-green);
     color: #fff;
@@ -288,14 +288,15 @@
 }
 
 .list-close-btn {
-    width: 32px;
+    position: absolute;
+    right: 0;
+    width: 16px;
     line-height: 32px;
-    font-size: 18px;
+    font-size: 14px;
     text-decoration: none;
     text-align: center;
     background-color: transparent;
     color: var(--gray-ver3);
-    margin-left: 4px;
 }
 
 .list-close-btn:hover {

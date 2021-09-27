@@ -132,7 +132,7 @@
     cursor: pointer;
     text-overflow: ellipsis;
     white-space: nowrap;
-    margin-left: 35px;
+    /*margin-left: 35px;*/
     text-align: center;
     margin: 0 10px;
     color: white;
@@ -220,7 +220,7 @@
 .user {
     min-width: 32px;
     height: 32px;
-    background-color: rgba(9, 30, 66, .04);
+    /*background-color: rgba(9, 30, 66, .04);*/
     margin-right: 5px;
     font-size: 12px;
     font-weight: 700;
@@ -229,4 +229,34 @@
     color: #fff;
     cursor: pointer;
     border-radius: 50%;
+}
+
+.change-btn {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F4F5F7;
+    cursor: pointer;
+    background: var(--dark-green);
+    color: #fff;
+}
+
+.change-btn:hover {
+    background: var(--green-ver2);
+}
+
+.unchange-btn {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.unchange-btn i {
+    color: var(--gray-ver3);
+}
+
+.unchange-btn:hover i {
+    color: var(--gray-ver4);
 }

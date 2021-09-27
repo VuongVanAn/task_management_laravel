@@ -1,4 +1,3 @@
-
 let boardLabel = document.getElementById('board-label');
 let boardNameEdit = document.getElementById('board-name-edit');
 let boardFav = document.getElementById('board-header-fav ');
@@ -20,23 +19,24 @@ function createCardComposerContainer(list) {
 	newOpenCardComposer.innerHTML = "<span style=\"line-height: 30px;height: 20px;font-size:" +
 		"16px;width: 20px;margin-right: 10px;border-radius: 3px;\"><i " +
 		"class=\"fas fa-plus\"></i></span><span style=\"font-size: 16px;\">" +
-		"Add another card</span>";
+		"Thêm mới thẻ</span>";
 
 	var newCardComposer = document.createElement('div');
 	newCardComposer.className = "card-composer hide";
 
 	var newCardComposerTitle = document.createElement('textarea');
 	newCardComposerTitle.className = "card-composer-title";
-	newCardComposerTitle.placeholder = "Enter a title for this card..."
+	newCardComposerTitle.placeholder = "Nhập tiêu đề thẻ..."
 
 	var newDiv = document.createElement('div');
 	newDiv.style.width = "100%";
 	newDiv.style.height = "32px";
 	newDiv.style.display = "flex";
+	newDiv.style.position = "relative";
 
 	var newCardAddBtn = document.createElement('div');
 	newCardAddBtn.className = "card-add-btn";
-	newCardAddBtn.innerHTML = "Add card";
+	newCardAddBtn.innerHTML = "Lưu";
 
 	var newCardCloseBtn = document.createElement('div');
 	newCardCloseBtn.className = "card-close-btn";

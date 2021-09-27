@@ -31,7 +31,7 @@
             <div class="nav-board">
                 <a href="#" class="nav-btn">
                     <i class="fab fa-trello"></i>
-                    <span>Boards</span>
+                    <span>Bảng</span>
                 </a>
             </div>
 
@@ -90,17 +90,17 @@
 					<div style="width: 100%;height: 2px; background-color: dimgray;margin: 20px 0;"></div>
 					<div class="btn">
 						<i class="fab fa-trello"></i>
-						<span>Boards</span>
+						<span>Bảng</span>
 					</div>
 					<div class="btn">
 						<i class="fas fa-user"></i>
-						<a href="/profile">Profile</a>
+						<a href="/profile">Hồ sơ</a>
 					</div>
 					<div class="btn">
 						<i class="fas fa-door-open"></i>
 						<a id="logout" href="{{ route('logout') }}" style="text-decoration: none;" onclick="event.preventDefault();
 										document.getElementById('logout-form').submit();">
-							Logout
+							Thoát
 						</a>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 							{{ csrf_field() }}
@@ -114,13 +114,13 @@
 				<div class="board-section">
 					<div class="board-title">
 						<span><i class="fas fa-user"></i></span>
-						<span>Personal boards</span>
+						<span>Bảng cá nhân</span>
 					</div>
 
 					<div id="board-wrapper" class="board-wrapper">
 						<div id="new-board" class="board new-board">
 							<i class="fas fa-plus"></i>
-							<span>Create new board</span>
+							<span>Tạo bảng mới</span>
 						</div>
 					</div>
 
@@ -131,9 +131,9 @@
 		<!-- Bảng hiển thị thêm/sửa bảng -->
 		<div id="popup" class="popup hide">
 			<div class="new-board-box">
-				<input type="text" name="" id="input-name-board" placeholder="Add board title" autocomplete="off" spellcheck="false">
+				<input type="text" name="" id="input-name-board" placeholder="Nhập tên bảng" autocomplete="off" spellcheck="false">
 				<div class="popup-control">
-					<button id="save-board" class="change-btn" type="button">Create Board</button>
+					<button id="save-board" class="change-btn" type="button">Tạo bảng</button>
 					<button id="cancel-board" class="unchange-btn" type="button"><i class="fas fa-times"></i></button>
 				</div>
 			</div>
@@ -142,12 +142,12 @@
 		<!-- Bảng hiển thị sửa/xóa bảng -->
 		<div id="popup-action" class="popup-action hide" data-id-board="">
             <div class="popup-title">
-                <span>List actions</span>
+                <span>Thao tác</span>
             </div>
             <div class="popup-horizontal"></div>
-            <div id="change-title-btn" class="popup-btn">Change title</div>
+            <div id="change-title-btn" class="popup-btn">Sửa tên bảng</div>
             <div id="delete-board-btn" class="popup-btn">
-				<span>Delete board</span>
+				<span>Xóa bảng</span>
 			</div>
             <button id="cancel-actions" class="unchange-btn" type="button"><i class="fas fa-times"></i></button>
         </div>
@@ -155,7 +155,7 @@
 		<!-- Bảng chọn màu cho avatar -->
 		<div id="avatar-picker" class="avatar-picker hide">
 			<div class="popup-title">
-				<span>Pick a color</span>
+				<span>Chọn màu</span>
 				<span id="cancel-avatar-picker" class="unchange-btn">
 				    <i class="fas fa-times"></i>
 				</span>
@@ -188,6 +188,7 @@
 	</div>
 
 	<script src="{{ asset('assets/js/jquery-3.5.1.js') }}"></script>
+	<script src="{{ asset('assets/js/constants.js') }}"></script>
 	<script src="{{ asset('assets/js/ultilities.js') }}"></script>
 	<script src="{{ asset('assets/js/home.js') }}"></script>
 	<script type="text/javascript">

@@ -20,33 +20,32 @@ function handleAPI(url, data, method, type) {
         url: url,
         type: method,
         data: data,
-        success: function(response) {
+        success: function (response) {
             //Xử lý các truy vấn vơis bảng
-            if (type == "board") {
+            if (type === BOARD) {
                 switch (method) {
-                    case "GET":
+                    case GET:
                         console.log(response);
                         for (let i = 0; i < response.length; i++) {
                             renderBoard(response[i].id, response[i].title);
                         }
                         break;
-                    case "POST":
+                    case POST:
                         renderBoard(response.id, response.title);
-                        showAlertMessage("Add board successfully !!!", true);
+                        showAlertMessage(ADD_BOARD_SUCCESS, true);
                         break;
-                    case "PUT":
-                        showAlertMessage("Update board successfully !!!", true);
+                    case PUT:
+                        showAlertMessage(UPDATE_BOARD_SUCCESS, true);
                         break;
-                    case "DELETE":
+                    case DELETE:
                         deleteBoard();
-                        showAlertMessage("Delete board successfully !!!", true);
+                        showAlertMessage(DELETE_BOARD_SUCCESS, true);
                         break;
                 }
-
-                //Xử lý các truy vấn vơi danh sách
-            } else if (type == "list") {
+            //Xử lý các truy vấn vơi danh sách
+            } else if (type === LIST) {
                 switch (method) {
-                    case "GET":
+                    case GET:
                         console.log(response);
                         setDataBoard();
                         for (let i = 1; i <= response.length; i++) {
@@ -54,67 +53,65 @@ function handleAPI(url, data, method, type) {
                             renderListCard(list, response[i - 1].card);
                         }
                         break;
-                    case "POST":
+                    case POST:
                         let list = setEmptyList(response);
                         renderList(list);
-                        showAlertMessage("Add board successfully !!!", true);
+                        showAlertMessage(ADD_LIST_SUCCESS, true);
                         break;
-                    case "PUT":
+                    case PUT:
                         console.log(response);
-                        showAlertMessage("Update list successfully !!!", true);
+                        showAlertMessage(UPDATE_LIST_SUCCESS, true);
                         break;
-                    case "DELETE":
+                    case DELETE:
                         deleteList();
-                        showAlertMessage("Delete list successfully !!!", true);
+                        showAlertMessage(DELETE_LIST_SUCCESS, true);
                         break;
                 }
-
-                //Xử lý các truy vấn vơis thẻ
-            } else if (type == "card") {
+            //Xử lý các truy vấn với thẻ
+            } else if (type === CARD) {
                 switch (method) {
-                    case "GET":
+                    case GET:
                         renderCardInfo(response);
                         break;
-                    case "POST":
+                    case POST:
                         let list = getList(response.list_id);
                         let card = setEmptyCard(response);
                         loadCard(list, card);
-                        showAlertMessage("Add card successfully !!!", true);
+                        showAlertMessage(ADD_CARD_SUCCESS, true);
                         break;
-                    case "PUT":
-                        //showAlertMessage("Update card successfully !!!", true);
-                        console.log(response);
+                    case PUT:
+                        showAlertMessage(UPDATE_CARD_SUCCESS, true);
                         break;
-                    case "DELETE":
-                        showAlertMessage("Delete card successfully !!!", true);
+                    case DELETE:
+                        showAlertMessage(DELETE_CARD_SUCCESS, true);
                         break;
                 }
-                //Xử lý các truy vấn linh tinh
-            } else if (type == "comment") {
+            //Xử lý các truy vấn khác
+            } else if (type === COMMENT) {
                 switch (method) {
-                    case "POST":
+                    case POST:
                         renderComment(response, new Date());
                         break;
                 }
-            } else if (type == "attachment") {
+            } else if (type === ATTACHMENT) {
                 switch (method) {
-                    case "POST":
+                    case POST:
                         renderAttachment(response);
                         break;
                 }
-            } else if (type == "checklist") {
+            } else if (type === CHECKLIST) {
                 switch (method) {
-                    case "POST":
+                    case POST:
                         console.log(response);
                         renderCheckList(response);
                         break;
-                    case "PUT":
+                    case PUT:
                         console.log(response);
                         break;
                 }
             }
         },
-        error: function(request, status, error) {
+        error: function (request, status, error) {
             showAlertMessage(status, false);
         }
     });
@@ -126,14 +123,14 @@ function setDateText(date, format) {
     let hour = (d.getHours() < 10) ? ("0" + d.getHours()) : (d.getHours());
     let minute = (d.getMinutes() < 10) ? ("0" + d.getMinutes()) : (d.getMinutes());
     let second = (d.getSeconds() < 10) ? ("0" + d.getSeconds()) : (d.getSeconds());
-    if (format == "y-m-d h:i:s") {
+    if (format === "y-m-d h:i:s") {
         return d.getFullYear() + "-" + `${d.getMonth() + 1}` + "-" + d.getDate() +
             " " + hour + ":" + minute + ":" + second;
-    } else if (format == "d/m/y h:i") {
+    } else if (format === "d/m/y h:i") {
 
         return d.getDate() + "/" + `${d.getMonth() + 1}` + "/" + d.getFullYear() +
             " " + hour + ":" + minute;
-    } else if (format == "d/m h:i") {
+    } else if (format === "d/m h:i") {
         return `${d.getDate()}` + " Month " + `${d.getMonth() + 1}` + " at " + hour + ":" + minute;
     } else {
         return `${d.getDate()}` + " Month " + `${d.getMonth() + 1}`;
@@ -170,7 +167,7 @@ function deleteList() {
     let boardContent = document.getElementById('board-content');
     let listControl = document.getElementById('list-control');
     for (let i = 0; i < boardContent.childElementCount - 1; i++) {
-        if (boardContent.children[i].children[0].getAttribute('data-id-list') == listControl.getAttribute('data-id-list')) {
+        if (boardContent.children[i].children[0].getAttribute('data-id-list') === listControl.getAttribute('data-id-list')) {
             boardContent.removeChild(boardContent.children[i]);
         }
     }
@@ -181,7 +178,7 @@ function deleteBoard() {
     let boardWrapper = document.getElementById('board-wrapper');
     let popupAction = document.getElementById('popup-action');
     for (let i = 0; i < boardWrapper.childElementCount; i++) {
-        if (boardWrapper.children[i].getAttribute('data-id-board') == popupAction.getAttribute('data-id-board')) {
+        if (boardWrapper.children[i].getAttribute('data-id-board') === popupAction.getAttribute('data-id-board')) {
             boardWrapper.removeChild(boardWrapper.children[i]);
         }
     }
@@ -227,13 +224,23 @@ function getCard(listId, cardId) {
 
 //Đặt giá tri trôngs cho 1 thẻ
 function setEmptyCard(response) {
-    let cardJson = { id: response.id, title: response.title, lists_id: response.list_id, dead_line: null, status: "", description: "", attachment: null, check_lists: [], comments: [] };
+    let cardJson = {
+        id: response.id,
+        title: response.title,
+        lists_id: response.list_id,
+        dead_line: null,
+        status: "",
+        description: "",
+        attachment: null,
+        check_lists: [],
+        comments: []
+    };
     return cardJson;
 }
 
 //Đặt giá trị trong cho danh sach
 function setEmptyList(response) {
-    let listJson = { id: response.id, title: response.title, board_id: 0, card: [] };
+    let listJson = {id: response.id, title: response.title, board_id: 0, card: []};
     return listJson;
 }
 
@@ -247,7 +254,7 @@ function setUrlBackground(boardId) {
 // Hiển thị thông báo alert
 function showAlertMessage(msg, isSuccess) {
     let alertMessage = document.querySelector('.alert');
-    if (isSuccess == true) {
+    if (isSuccess) {
         alertMessage.classList.add('success');
         alertMessage.innerHTML =
             `<span><i class="fa fa-check-circle"></i></span>
@@ -273,14 +280,14 @@ function showAlertMessage(msg, isSuccess) {
         alertMessage.classList.add('showAlert');
     }
 
-    setTimeout(function() {
+    setTimeout(function () {
         alertMessage.classList.remove('show-alert');
         alertMessage.classList.add('hide-alert');
         alertMessage.classList.remove('success');
         alertMessage.classList.remove('error');
     }, 3000);
 
-    alertMessage.lastElementChild.addEventListener('click', function() {
+    alertMessage.lastElementChild.addEventListener('click', function () {
         alertMessage.classList.remove('show-alert');
         alertMessage.classList.add('hide-alert');
         alertMessage.classList.remove('success');
@@ -309,7 +316,7 @@ function setDataList(list, item, index) {
 }
 
 function getDataList(list) {
-    let json = { boardId: 0, listId: 0 };
+    let json = {boardId: 0, listId: 0};
     json.boardId = list.getAttribute('data-id-board');
     json.listId = list.getAttribute('data-id-board');
     return json;
@@ -324,7 +331,7 @@ function setDataCard(item, list, card) {
 }
 
 function getDataCard(card) {
-    let json = { boardId: 0, listId: 0, cardId: 0 };
+    let json = {boardId: 0, listId: 0, cardId: 0};
     json.boardId = card.getAttribute('data-id-board');
     json.listId = card.getAttribute('data-id-list');
     json.cardId = card.getAttribute('data-id-card');

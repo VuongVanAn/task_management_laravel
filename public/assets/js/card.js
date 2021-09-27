@@ -109,7 +109,7 @@ function renderDeadline(deadline, status) {
 		dateSection.className = "card-detail-item";
 		dateText.innerHTML = setDateText(deadline, "d/m h:i");
 		dateText.setAttribute('data-deadline', deadline);
-		if (status == "completed") {
+		if (status === "completed") {
 			dateCheckbox.className = "card-date-checkbox is-checked";
 			dateStatus.innerHTML = "Complete";
 			dateStatus.className = "date-status is-complete";
@@ -128,7 +128,7 @@ function renderDeadline(deadline, status) {
 // Check box để đánh dấu hoan thanh
 dateCheckbox.addEventListener('click', function () {
 	let card = getCard(cardInfo.getAttribute('data-id-list'), cardInfo.getAttribute('data-id-card'));
-	if (dateText.innerHTML != "") {
+	if (dateText.innerHTML !== "") {
 		if (dateCheckbox.classList.contains('is-checked')) {
 			dateCheckbox.className = "card-date-checkbox";
 			checkDeadline(dateStatus, dateText.getAttribute('data-deadline'));
@@ -165,7 +165,7 @@ descEmpty.addEventListener('click', function () {
 });
 
 clearDescBtn.addEventListener('click', function () {
-	if (descContent.firstElementChild.innerHTML != "") {
+	if (descContent.firstElementChild.innerHTML !== "") {
 		descContent.firstElementChild.innerHTML = "";
 		descEditTextarea.value = "";
 		descEmpty.classList.toggle('hide');
@@ -176,7 +176,7 @@ clearDescBtn.addEventListener('click', function () {
 });
 
 descSaveBtn.addEventListener('click', function () {
-	if (descEditTextarea.value != "") {
+	if (descEditTextarea.value !== "") {
 		descContent.firstElementChild.innerHTML = descEditTextarea.value;
 		swapElement(descContent, descEditSection);
 
@@ -192,7 +192,7 @@ descContent.addEventListener('click', function () {
 });
 
 descCancelBtn.addEventListener('click', function () {
-	if (descContent.firstElementChild.innerHTML == "") {
+	if (descContent.firstElementChild.innerHTML === "") {
 		descEditSection.className = "desc-edit-section hide";
 		descContent.className = "desc-label hide";
 		descEmpty.className = "desc-empty";
@@ -299,7 +299,7 @@ function renderAttachment(attachment) {
 	newAttachmentSaveBtn.style.width = "50px";
 	newAttachmentSaveBtn.innerHTML = "<span>Lưu</span>";
 	newAttachmentSaveBtn.addEventListener('click', function () {
-		if (newAttachmentEditInput.value != "") {
+		if (newAttachmentEditInput.value !== "") {
 			newAttachmentLink.href = newAttachmentEditInput.value;
 			newAttachmentLink.innerHTML = "<span>" + newAttachmentEditInput.value + "</span>";
 			swapElement(newAttachmentLink, newAttachmentEditInput);
@@ -341,7 +341,7 @@ openNewAttachmentBtn.addEventListener('click', function () {
 });
 
 attachmentSaveBtn.addEventListener('click', function () {
-	if (newAttachmentInput.value != "") {
+	if (newAttachmentInput.value !== "") {
 		let cardInfo = document.getElementById('card-info');
 		let url = setURLCard(cardInfo.getAttribute('data-id-board'), cardInfo.getAttribute('data-id-list'), cardInfo.getAttribute('data-id-card'));
 		url = url + "/attachments";
@@ -370,7 +370,7 @@ function setCheckListToJson(listItems, newTask) {
 	let subtask = { task_name: "", isChecked: "" };
 	for (let i = 0; i < listItems.childElementCount; i++) {
 		let item = listItems.children[i];
-		if (item.firstElementChild.className == "item-checkbox is-checked") {
+		if (item.firstElementChild.className === "item-checkbox is-checked") {
 			subtask.isChecked = "true";
 		} else {
 			subtask.isChecked = "false";
@@ -378,7 +378,7 @@ function setCheckListToJson(listItems, newTask) {
 		subtask.task_name = item.children[1].firstElementChild.innerHTML;
 		data += JSON.stringify(subtask) + ",";
 	}
-	if (newTask != "") {
+	if (newTask !== "") {
 		subtask.task_name = newTask;
 		subtask.isChecked = "false";
 		data += JSON.stringify(subtask);
@@ -397,7 +397,7 @@ function renderSubtask(listItem, taskName, isChecked) {
 	let itemCheckbox = document.createElement('div');
 	itemCheckbox.className = "item-checkbox";
 	itemCheckbox.innerHTML = "<i class=\"fas fa-check\"></i>";
-	if (isChecked == "true") {
+	if (isChecked === "true") {
 		itemCheckbox.className = "item-checkbox is-checked";
 	}
 
@@ -450,7 +450,7 @@ function renderSubtask(listItem, taskName, isChecked) {
 	});
 
 	itemSaveBtn.addEventListener('click', function () {
-		if (itemInput.value != "") {
+		if (itemInput.value !== "") {
 			itemDetail.firstElementChild.innerHTML = itemInput.value;
 			itemDetail.classList.toggle('hide');
 			itemInput.classList.toggle('hide');
@@ -507,11 +507,11 @@ function renderCheckList(checklist) {
 
 	let checkListControlHide = document.createElement('div');
 	checkListControlHide.className = "normal-btn";
-	checkListControlHide.innerHTML = "<span>Hide completed items</span>";
+	checkListControlHide.innerHTML = "<span>Ẩn đầu mục hoàn thành</span>";
 
 	let checkListControlShow = document.createElement('div');
 	checkListControlShow.className = "normal-btn hide";
-	checkListControlShow.innerHTML = "<span>Show checked items</span>";
+	checkListControlShow.innerHTML = "<span>Hiển thị đầu mục đánh dấu</span>";
 	checkListControlShow.addEventListener('click', function () {
 		swapElement(checkListControlHide, checkListControlShow);
 		showComplete(checkList);
@@ -519,7 +519,7 @@ function renderCheckList(checklist) {
 
 	let checkListControlDelete = document.createElement('div');
 	checkListControlDelete.className = "normal-btn";
-	checkListControlDelete.innerHTML = "<span>Delete</span>";
+	checkListControlDelete.innerHTML = "<span>Xóa</span>";
 	checkListControlDelete.addEventListener('click', function () {
 		let cardInfo = document.getElementById('card-info');
 		let url = setURLCard(cardInfo.getAttribute('data-id-board'), cardInfo.getAttribute('data-id-list'), cardInfo.getAttribute('data-id-card'));
@@ -555,7 +555,7 @@ function renderCheckList(checklist) {
 	});
 
 	checkListNameEditSaveBtn.addEventListener('click', function () {
-		if (checklistNameEditInput.value != "") {
+		if (checklistNameEditInput.value !== "") {
 			checklistTitle.firstElementChild.innerHTML = checklistNameEditInput.value;
 
 			let url = setURLCard(cardInfo.getAttribute('data-id-board'), cardInfo.getAttribute('data-id-list'), cardInfo.getAttribute('data-id-card'));
@@ -613,7 +613,7 @@ function renderCheckList(checklist) {
 	let newItemOpen = document.createElement('div');
 	newItemOpen.className = "normal-btn";
 	newItemOpen.style.marginLeft = 0;
-	newItemOpen.innerHTML = "<span>Add an item</span>";
+	newItemOpen.innerHTML = "<span>Thêm đầu mục</span>";
 	newItemOpen.addEventListener('click', function () {
 		swapElement(this, newItemSection);
 		newItemSectionInput.focus();
@@ -629,12 +629,13 @@ function renderCheckList(checklist) {
 	let newItemSectionDiv = document.createElement('div');
 	newItemSectionDiv.style.display = "flex";
 	newItemSectionDiv.style.marginTop = "10px";
+
 	let newItemSaveBtn = document.createElement('div');
 	newItemSaveBtn.className = "change-btn";
-	newItemSaveBtn.style.width = "50px";
+	newItemSaveBtn.style.width = "64px";
 	newItemSaveBtn.innerHTML = "<span>Lưu</span>";
 	newItemSaveBtn.addEventListener('click', function () {
-		if (newItemSectionInput.value != "") {
+		if (newItemSectionInput.value !== "") {
 			let cardInfo = document.getElementById('card-info');
 			let url = setURLCard(cardInfo.getAttribute('data-id-board'), cardInfo.getAttribute('data-id-list'), cardInfo.getAttribute('data-id-card'));
 			url += "/checklists/" + checklist.id;
@@ -698,7 +699,7 @@ function updateTodoList(todoList) {
 	let progress = todoList.childNodes[1];
 	let currentBar = progress.lastChild.firstChild;
 	let percentage;
-	if (numberOfItems == 0) {
+	if (numberOfItems === 0) {
 		percentage = 0;
 	} else {
 		percentage = Math.floor(numberOfComplete / numberOfItems * 100);
@@ -706,7 +707,7 @@ function updateTodoList(todoList) {
 	progress.firstElementChild.innerHTML = percentage + "%";
 	progress.lastChild.firstChild.style.width = percentage + "%";
 
-	if (numberOfComplete == numberOfItems) {
+	if (numberOfComplete === numberOfItems) {
 		currentBar.style.backgroundColor = "#58cf40";
 	} else {
 		currentBar.style.backgroundColor = "#80ccff";
@@ -735,7 +736,7 @@ function showComplete(todoList) {
 
 //Nut them 
 newTodoListAddBtn.addEventListener('click', function () {
-	if (newTodoListBoxInput.value != "") {
+	if (newTodoListBoxInput.value !== "") {
 		let cardInfo = document.getElementById('card-info');
 		let url = setURLCard(cardInfo.getAttribute('data-id-board'), cardInfo.getAttribute('data-id-list'), cardInfo.getAttribute('data-id-card'));
 		url = url + "/checklists";
@@ -816,7 +817,7 @@ function renderComment(activity, createdDate) {
 	newCommentEditBoxSave.style.minWidth = "50px";
 	newCommentEditBoxSave.innerHTML = "<span>Lưu</span>";
 	newCommentEditBoxSave.addEventListener('click', function () {
-		if (newCommentEditBoxTextarea.value != "") {
+		if (newCommentEditBoxTextarea.value !== "") {
 			newContent.firstElementChild.innerHTML = newCommentEditBoxTextarea.value;
 			swapElement(newCommentContent, newCommentEditBox);
 
@@ -865,14 +866,14 @@ function renderActivity(listActivity) {
 }
 
 commentInput.addEventListener('focus', function () {
-	if (this.value == "") {
+	if (this.value === "") {
 		commentControl.classList.toggle('hide');
 	}
 });
 
 //Tạo comment mới
 commentControl.firstElementChild.addEventListener('click', function () {
-	if (commentInput.value != "") {
+	if (commentInput.value !== "") {
 		commentControl.classList.toggle('hide');
 		if (hideAllComment.classList.contains('hide')) {
 			swapElement(hideAllComment, showAllComment);
@@ -912,7 +913,7 @@ function renderCardInfo(data) {
 	renderDeadline(data.dead_line, data.status);
 	renderDescription(data.description);
 
-	if (data.attachment != []) {
+	if (data.attachment !== []) {
 		for (let i = 0; i < data.attachment.length; i++) {
 			renderAttachment(data.attachment[i]);
 		}
@@ -957,7 +958,7 @@ addAttachmentBtn.addEventListener('click', function () {
 	if (attachmentSection.classList.contains('hide')) {
 		attachmentSection.classList.toggle('hide');
 	} else {
-		if (attachmentList.innerText == "") {
+		if (attachmentList.innerText === "") {
 			attachmentSection.classList.toggle('hide');
 		}
 	}
@@ -970,7 +971,7 @@ function deleteCard(listId, cardId) {
 	list.children[1].removeChild(card);
 }
 
-//Đặt lại các truong gia tri cho thẻ chi tiết
+//Đặt lại các trường giá trị cho thẻ chi tiết
 function clearDetail() {
 	cardHeaderLabel.firstElementChild.innerHTML = "";
 	cardHeaderEdit.value = "";
@@ -985,7 +986,7 @@ function clearDetail() {
 	listComment.innerHTML = "";
 }
 
-//Tạo 1 thẻ mơis
+//Tạo 1 thẻ mới
 function createEmptyCard(listCard, card) {
 	let newEmptyCard = document.createElement('div');
 	newEmptyCard.className = "card empty";
