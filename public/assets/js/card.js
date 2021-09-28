@@ -734,7 +734,7 @@ function showComplete(todoList) {
 	}
 }
 
-//Nut them 
+//Nút thêm
 newTodoListAddBtn.addEventListener('click', function () {
 	if (newTodoListBoxInput.value !== "") {
 		let cardInfo = document.getElementById('card-info');
@@ -946,6 +946,7 @@ addTodoBtn.addEventListener('click', function () {
 	let left = this.getBoundingClientRect().left + 20;
 	newTodoListBox.style.top = top + "px";
 	newTodoListBox.style.left = left + "px";
+	newTodoListBoxInput.focus();
 });
 
 addDueDateBtn.addEventListener('click', function () {

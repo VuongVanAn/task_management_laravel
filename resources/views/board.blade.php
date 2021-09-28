@@ -326,7 +326,7 @@
     <!-- Popup thêm việc các nút thao tác với danh sách (nhưng chưa làm kịp) -->
     <div id="list-control" class="popup list-control hide">
         <div class="popup-icon popup-close">
-            <i class="fas fa-minus"></i>
+            <i class="fas fa-times"></i>
         </div>
         <div class="popup-title">
             <span>Thao tác</span>
@@ -340,7 +340,7 @@
 
         <div id="move-list" class="popup-btn">Di chuyển danh sách</div>
         <div id="copy-list" class="popup-btn">Sao chép danh sách</div>
-        <div id="delete-list" class="popup-btn delete">Xóa danh sách</div>
+        <div id="delete-list" class="popup-btn">Xóa danh sách</div>
     </div>
 
     <!-- Các thẻ trong danh sách -->
@@ -349,7 +349,7 @@
             <i class="fas fa-chevron-left"></i>
         </div>
         <div class="popup-icon popup-close">
-            <i class="fas fa-minus"></i>
+            <i class="fas fa-times"></i>
         </div>
         <div class="popup-title">
             <span>Sắp xếp danh sách</span>
@@ -368,7 +368,7 @@
 
     <div id="list-move-option" class="popup popup-move hide">
         <div class="popup-icon popup-close">
-            <i class="fas fa-minus"></i>
+            <i class="fas fa-times"></i>
         </div>
         <div class="popup-title">
             <span>Di chuyển</span>
@@ -378,8 +378,8 @@
         <span>Vị trí</span>
         <select name="" id="select-option" class="select-option">
         </select>
-        <div id="save-index" class="change-btn" style="width: 50px;">
-            Move
+        <div id="save-index" class="change-btn" style="width: 80px;">
+            Di chuyển
         </div>
     </div>
 </div>

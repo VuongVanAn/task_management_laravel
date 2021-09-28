@@ -72,7 +72,7 @@ function handleAPI(url, data, method, type) {
                         renderCardInfo(response?.data);
                         break;
                     case POST:
-                        let list = getList(response?.data?.list_id);
+                        let list = getList(response?.data?.lists_id);
                         let card = setEmptyCard(response?.data);
                         loadCard(list, card);
                         showAlertMessage(ADD_CARD_SUCCESS, true);

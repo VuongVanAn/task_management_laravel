@@ -19,7 +19,7 @@ class CreateTasksTable extends Migration
             $table->string('description')->nullable();
             $table->string('attachment')->nullable();
             $table->string('dead_line')->nullable();
-            $table->integer('list_id')->unsigned()->nullable();
+            $table->integer('lists_id')->unsigned()->nullable();
             $table->string('status');
             $table->timestamps();
             $table->softDeletes();

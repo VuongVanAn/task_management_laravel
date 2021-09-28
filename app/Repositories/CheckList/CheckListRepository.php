@@ -19,8 +19,12 @@ class CheckListRepository extends BaseRepository implements ICheckListRepository
     public function updateCheckList(Request $request, $id)
     {
         $checklist = $this->model->find($id);
-        $checklist->name = $request->name;
-        $checklist->list_checklist = json_encode($request->list_checklist);
+        if (isset($request->name)){
+            $checklist->name = $request->name;
+        }
+        if (isset($request->list_checklist)) {
+            $checklist->list_checklist = json_encode($request->list_checklist);
+        }
         return $checklist->save();
     }
 }

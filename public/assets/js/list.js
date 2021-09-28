@@ -30,7 +30,7 @@ function loadCard(list, card) {
 
 	if (card.dead_line != null) {
 		newCardDeadline.innerHTML = "<i class=\"far fa-clock\"></i><span>" + setDateText(card.dead_line, "") + "</span>";
-		if (card.status == "completed") {
+		if (card.status === "completed") {
 			newCardDeadline.className = "date-status is-complete normal";
 		} else {
 			newCardDeadline.className = setStatusClass(card.dead_line);
@@ -92,8 +92,8 @@ function createListHeader(list, title) {
 	newListHeaderExtra.addEventListener('click', function () {
 		listIndex = list.getAttribute('data-id-list');
 		let position = this.getBoundingClientRect();
-		let positionTop = position.top;
-		let positionLeft = position.left + 40;
+		let positionTop = position.top + 35;
+		let positionLeft = position.left + 30;
 		listControl.style.top = positionTop + "px";
 		listControl.style.left = positionLeft + "px";
 		listControl.classList.toggle('hide');
@@ -178,7 +178,7 @@ let sortByDeadlineDown = document.getElementById('sort-deadline-down');
 let sortByName = document.getElementById('sort-name');
 
 listSort.addEventListener('click', function () {
-	setPosition(listSort, listSortOption, 250, -5);
+	setPosition(listSort, listSortOption, 225, -5);
 	moveListOption.className = "popup popup-move hide";
 	listSortOption.className = "popup popup-sort";
 });
@@ -237,7 +237,7 @@ let moveIndex = document.getElementById('select-option');
 let saveIndex = document.getElementById('save-index');
 
 listMove.addEventListener('click', function () {
-	setPosition(listMove, moveListOption, 250, -5);
+	setPosition(listMove, moveListOption, 225, -5);
 	moveListOption.className = "popup popup-move";
 	listSortOption.className = "popup popup-sort hide";
 	loadIndex();
@@ -250,8 +250,8 @@ function loadIndex() {
 	for (let i = 1; i <= numberOfList; i++) {
 		let opt = document.createElement('option');
 		opt.value = i;
-		if (i == listIndex) {
-			opt.text = i + " (current)";
+		if (i === parseInt(listIndex)) {
+			opt.text = i + " (hiện tại)";
 			opt.selected = true;
 		} else {
 			opt.text = i;
@@ -273,7 +273,7 @@ function moveList(firstIndex, secondIndex) {
 	firstList.setAttribute('data-index', secondList.getAttribute('data-index'));
 	secondList.setAttribute('data-index', latchIndex);
 
-	if(secondListWrapper != latchWrapper) {
+	if(secondListWrapper !== latchWrapper) {
 		boardContent.insertBefore(firstListWrapper, secondListWrapper);
 		boardContent.insertBefore(secondListWrapper, latchWrapper);
 	} else {
@@ -315,7 +315,7 @@ saveIndex.addEventListener('click', function() {
 	let listControl = document.getElementById('list-control');
 	let current = listControl.getAttribute('data-index');
 	let choice = moveIndex.value;
-	if(choice != current) {
+	if(choice !== current) {
 		console.log(choice);
 		moveList(current, choice);
 		moveListOption.className = "popup popup-move hide";

@@ -17,7 +17,7 @@ function createCardComposerContainer(list) {
 	var newOpenCardComposer = document.createElement('div');
 	newOpenCardComposer.className = "open-card-box";
 	newOpenCardComposer.innerHTML = "<span style=\"line-height: 30px;height: 20px;font-size:" +
-		"16px;width: 20px;margin-right: 10px;border-radius: 3px;\"><i " +
+		"14px;width: 20px;margin-right: 10px;border-radius: 3px;\"><i " +
 		"class=\"fas fa-plus\"></i></span><span style=\"font-size: 16px;\">" +
 		"Thêm mới thẻ</span>";
 
