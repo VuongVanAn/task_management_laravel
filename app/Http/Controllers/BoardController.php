@@ -1,50 +1,53 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Validator;
+
+use App\Repositories\Board\IBoardRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Auth;
-use App\Board;
+use Illuminate\Support\Facades\Auth;
 
-class BoardController extends Controller {
-    public function index() {
-        $user = Auth::user();
-        $user_id = $user->id;
-        $board = DB::select( DB::raw("SELECT id, title FROM boards WHERE user_id = '$user_id'") );
-        return response()->json($board);
+class BoardController extends BaseController
+{
+    public function __construct(IBoardRepository $boardRepository)
+    {
+        parent::__construct($boardRepository);
     }
 
-    public function saveBoard(Request $request) {
-        $id = DB::table('boards')->insertGetId(
-            ['title' => $request->title, 'user_id' => Auth::user()->id]);
-        return response()->json(["id" => $id, "title" => $request->title]);
+    public function index()
+    {
+        $userId = $this->getUserId();
+        return parent::findAll('user_id', $userId);
     }
 
-    public function findOne($id) {
-        $board = DB::select( DB::raw("SELECT id, title FROM boards WHERE id = '$id'") );
-        return response()->json($board);
+    public function findOne($id)
+    {
+        return parent::findById($id);
     }
 
-    public function updateBoard(Request $request, $id) {
-        $board = Board::find($id);
-        $board->title = $request->title;
-        $result = $board->save();
-        if ($result) {
-            return response()->json(["id" => $id, "title" => $request->title]);
-        } else {
-            return response()->json(['status' => 'fail', 'message' => 'board updated failure']);
-        }
+    public function saveBoard(Request $request)
+    {
+        return parent::create($request);
     }
 
-    public function deleteBoard($id) {
-        //$board = DB::select( DB::raw("SELECT * FROM boards WHERE id = '$id'") );
-        $board = Board::find($id);
-        $result = $board->delete();
-        if ($result) {
-            return response()->json(['status' => 'success', 'message' => 'board deleted successfully']);
-        } else {
-            return response()->json(['status' => 'fail', 'message' => 'board deleted failure']);
-        }
+    public function updateBoard(Request $request, $id)
+    {
+        return parent::update($request, $id);
+    }
+
+    public function deleteBoard($id)
+    {
+        return parent::delete($id);
+    }
+
+    protected function beforeSave(Request $request, $fieldValue)
+    {
+        $data = $request->all();
+        $data['user_id'] = $this->getUserId();
+        return $data;
+    }
+
+    private function getUserId()
+    {
+        return Auth::user()->id;
     }
 }

@@ -15,7 +15,6 @@ function setPosition(first, second, offsetX, offsetY) {
 
 //Xử lý các truy vấn API tới cho server và nhận phản hồi về để hiển thị ra màn hình
 function handleAPI(url, data, method, type) {
-    console.log(data);
     $.ajax({
         url: url,
         type: method,
@@ -25,13 +24,13 @@ function handleAPI(url, data, method, type) {
             if (type === BOARD) {
                 switch (method) {
                     case GET:
-                        console.log(response);
-                        for (let i = 0; i < response.length; i++) {
-                            renderBoard(response[i].id, response[i].title);
+                        const data = response?.data;
+                        for (let i = 0; i < data.length; i++) {
+                            renderBoard(data[i].id, data[i].title);
                         }
                         break;
                     case POST:
-                        renderBoard(response.id, response.title);
+                        renderBoard(response?.data?.id, response?.data?.title);
                         showAlertMessage(ADD_BOARD_SUCCESS, true);
                         break;
                     case PUT:
@@ -42,24 +41,23 @@ function handleAPI(url, data, method, type) {
                         showAlertMessage(DELETE_BOARD_SUCCESS, true);
                         break;
                 }
-            //Xử lý các truy vấn vơi danh sách
+            //Xử lý các truy vấn với danh sách
             } else if (type === LIST) {
                 switch (method) {
                     case GET:
-                        console.log(response);
                         setDataBoard();
-                        for (let i = 1; i <= response.length; i++) {
-                            let list = renderList(response[i - 1], i);
-                            renderListCard(list, response[i - 1].card);
+                        const data = response?.data;
+                        for (let i = 1; i <= data.length; i++) {
+                            let list = renderList(data[i - 1], i);
+                            renderListCard(list, data[i - 1].card);
                         }
                         break;
                     case POST:
-                        let list = setEmptyList(response);
+                        let list = setEmptyList(response?.data);
                         renderList(list);
                         showAlertMessage(ADD_LIST_SUCCESS, true);
                         break;
                     case PUT:
-                        console.log(response);
                         showAlertMessage(UPDATE_LIST_SUCCESS, true);
                         break;
                     case DELETE:
@@ -71,11 +69,11 @@ function handleAPI(url, data, method, type) {
             } else if (type === CARD) {
                 switch (method) {
                     case GET:
-                        renderCardInfo(response);
+                        renderCardInfo(response?.data);
                         break;
                     case POST:
-                        let list = getList(response.list_id);
-                        let card = setEmptyCard(response);
+                        let list = getList(response?.data?.list_id);
+                        let card = setEmptyCard(response?.data);
                         loadCard(list, card);
                         showAlertMessage(ADD_CARD_SUCCESS, true);
                         break;
@@ -90,20 +88,19 @@ function handleAPI(url, data, method, type) {
             } else if (type === COMMENT) {
                 switch (method) {
                     case POST:
-                        renderComment(response, new Date());
+                        renderComment(response?.data, new Date());
                         break;
                 }
             } else if (type === ATTACHMENT) {
                 switch (method) {
                     case POST:
-                        renderAttachment(response);
+                        renderAttachment(response?.data);
                         break;
                 }
             } else if (type === CHECKLIST) {
                 switch (method) {
                     case POST:
-                        console.log(response);
-                        renderCheckList(response);
+                        renderCheckList(response?.data);
                         break;
                     case PUT:
                         console.log(response);
@@ -140,8 +137,8 @@ function setDateText(date, format) {
 //Thêm token vào cho các truy vấn gưi request lên server
 function setTokenToData(tag, data) {
     let json;
-    if (data != "") {
-        if (tag != "list_checklist") {
+    if (data !== "") {
+        if (tag !== "list_checklist") {
             let token = $('meta[name="csrf-token"]').attr('content');
             json = "{\"" + tag + "\":\"" + data + "\",\"_token\":\"" + token + "\"}";
         } else {
@@ -188,7 +185,7 @@ function deleteBoard() {
 function getList(listId) {
     let boardContent = document.getElementById('board-content');
     for (let i = 0; i < boardContent.childElementCount - 1; i++) {
-        if (boardContent.children[i].children[0].getAttribute('data-id-list') == listId) {
+        if (boardContent.children[i].children[0].getAttribute('data-id-list') === listId) {
             let list = boardContent.children[i].children[0];
             return list;
         }
@@ -198,7 +195,7 @@ function getList(listId) {
 function getListWrapper(index) {
     let boardContent = document.getElementById('board-content');
     for (let i = 0; i < boardContent.childElementCount - 1; i++) {
-        if (boardContent.children[i].children[0].getAttribute('data-index') == index) {
+        if (boardContent.children[i].children[0].getAttribute('data-index') === index) {
             let listWrapper = boardContent.children[i];
             return listWrapper;
         }
@@ -210,11 +207,11 @@ function getCard(listId, cardId) {
     let boardContent = document.getElementById('board-content');
 
     for (let i = 0; i < boardContent.childElementCount - 1; i++) {
-        if (boardContent.children[i].children[0].getAttribute('data-id-list') == listId) {
+        if (boardContent.children[i].children[0].getAttribute('data-id-list') === listId) {
             let list = boardContent.children[i].children[0];
             for (let j = 0; j < list.children[1].childElementCount; j++) {
                 let card = list.children[1].children[j];
-                if (card.getAttribute('data-id-card') == cardId) {
+                if (card.getAttribute('data-id-card') === cardId) {
                     return card;
                 }
             }

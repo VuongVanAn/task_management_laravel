@@ -132,7 +132,6 @@ function createListCard(list) {
 
 //Nạp danh sách từ JSON trả về
 function renderList(list, index) {
-	console.log(list);
 	let boardContent = document.getElementById('board-content');
 	let newListWrapper = document.createElement('div');
 	newListWrapper.className = "list-wrapper";

@@ -38,7 +38,7 @@ btnGroup.forEach(function(btn) {
     });
 });
 
-//load board từ JSON trả về
+//Load board từ JSON trả về
 function renderBoard(boardId, boardName) {
     let boardWrapper = document.getElementById('board-wrapper');
     let newBoard = document.createElement('a');
@@ -72,7 +72,7 @@ function renderBoard(boardId, boardName) {
     boardWrapper.insertBefore(newBoard, newBoardBtn);
 }
 
-//update board từ JSON trả về
+//Update board từ JSON trả về
 function updateBoard(boardId, boardName) {
     let boardWrapper = document.getElementById('board-wrapper');
     let hrefBounds = boardWrapper.querySelector('a[href="/board/' + boardId + '"]');
@@ -102,7 +102,7 @@ function setInputText(title) {
 
 changeTitleBtn.addEventListener('click', function() {
     popupAction.classList.add('hide');
-    saveBoardBtn.innerHTML = 'Cập nhật bảng';
+    saveBoardBtn.innerHTML = 'Cập nhật';
     handleAPI("/boards/" + popupAction.getAttribute('data-id-board'), setTokenToData("", ""), "GET", "board");
     if (popup.classList.contains('hide')) {
         if (inputNameBoard.value != null) {
@@ -220,19 +220,20 @@ function handleAPI(url, data, method, type) {
                     case GET:
                         let splitUrl = url.split('/');
                         if (splitUrl[2] !== "") {
-                            setInputText(response[0].title);
+                            setInputText(response?.data?.title);
                         } else {
-                            for (let i = 0; i < response.length; i++) {
-                                renderBoard(response[i].id, response[i].title);
+                            const data = response?.data;
+                            for (let i = 0; i < data.length; i++) {
+                                renderBoard(data[i].id, data[i].title);
                             }
                         }
                         break;
                     case POST:
-                        renderBoard(response.id, response.title);
+                        renderBoard(response?.data?.id, response?.data?.title);
                         showAlertMessage(ADD_BOARD_SUCCESS, true);
                         break;
                     case PUT:
-                        updateBoard(response.id, response.title);
+                        updateBoard(response?.data?.id, response?.data?.title);
                         showAlertMessage(UPDATE_BOARD_SUCCESS, true);
                         break;
                     case DELETE:

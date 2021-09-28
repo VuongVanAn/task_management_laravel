@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lists extends Model
 {
+    protected $table = "lists";
+
+    protected $fillable = [
+        'title', 'board_id'
+    ];
+
     public function board()
     {
         return $this->belongsTo(Board::class);
@@ -15,5 +21,4 @@ class Lists extends Model
     {
         return $this->hasMany(Task::class);
     }
-
 }

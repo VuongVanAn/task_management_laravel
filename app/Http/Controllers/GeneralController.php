@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\DB;
 use App\Board;
 
 class GeneralController extends Controller
@@ -28,6 +25,7 @@ class GeneralController extends Controller
     {
         return view('home');
     }
+
     public function main($id)
     {
         $board = Board::find($id);

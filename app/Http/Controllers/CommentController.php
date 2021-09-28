@@ -2,49 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
+use App\Repositories\Comment\ICommentRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Auth;
-use App\Lists;
-use App\Comment;
-use App\Task;
+use Illuminate\Support\Facades\Auth;
 
-class CommentController extends Controller {
-    public function index($id, $list_id, $task_id) {        
-        $comments = DB::select( DB::raw("SELECT * FROM comments WHERE task_id = '$task_id'") );
-        return response()->json($comments); 
+class CommentController extends BaseController
+{
+    public function __construct(ICommentRepository $commentRepository)
+    {
+        parent::__construct($commentRepository);
     }
 
-    public function saveComment(Request $request, $id, $list_id, $task_id) {
-        $id = DB::table('comments')->insertGetId(
-            ['content' => $request->content,'task_id'=> $task_id]);
-        return response()->json(["id"=>$id, "content"=>$request->content]);
+    public function index($id, $listId, $taskId)
+    {
+        return parent::findAll('task_id', $taskId);
     }
 
-    public function findOne($id, $list_id, $task_id, $comment_id) {
-        $comment = Comment::find($comment_id);
-        return response()->json($comment); 
+    public function findOne($id, $listId, $taskId, $commentId)
+    {
+        return parent::findById($commentId);
     }
 
-    public function updateComment(Request $request, $id, $list_id, $task_id, $comment_id) {
-        $comment = Comment::find($comment_id);
-        $comment->content = $request->content;
-        $result = $comment->save();
-        if ($result) {
-            return response()->json(['status' => 'success', 'message' => 'comment updated successfully']);
-        } else {
-            return response()->json(['status' => 'fail', 'message' => 'comment updated failure']);
-        } 
+    public function saveComment(Request $request, $id, $listId, $taskId)
+    {
+        return parent::create($request, $taskId);
     }
 
-    public function deleteComment($id, $list_id, $task_id, $comment_id) {
-        $comment = Comment::find($comment_id);
-        $result = $comment->delete();
-        if ($result) {
-            return response()->json(['status' => 'success', 'message' => 'comment deleted successfully']);
-        } else {
-            return response()->json(['status' => 'fail', 'message' => 'comment deleted failure']);
-        }
+    public function updateComment(Request $request, $id, $listId, $taskId, $commentId)
+    {
+        return parent::update($request, $commentId);
+    }
+
+    public function deleteComment($id, $listId, $taskId, $commentId)
+    {
+        return parent::delete($commentId);
+    }
+
+    protected function beforeSave(Request $request, $fieldValue)
+    {
+        $data = $request->all();
+        $data['task_id'] = $fieldValue;
+        $data['user_id'] = Auth::user()->id;
+        return $data;
     }
 }

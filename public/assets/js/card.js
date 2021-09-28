@@ -258,7 +258,7 @@ function renderAttachment(attachment) {
 	let newAttachmentLink = document.createElement('a');
 	newAttachmentLink.href = attachment.content;
 	newAttachmentLink.target = "_blank";
-	newAttachmentLink.style.maxHeight = "14px";
+	newAttachmentLink.style.maxHeight = "20px";
 	newAttachmentLink.style.textOverflow = "ellipsis";
 	newAttachmentLink.innerHTML = "<span>" + attachment.content + "</span>";
 
@@ -534,7 +534,7 @@ function renderCheckList(checklist) {
 
 	let checklistNameEditInput = document.createElement('input');
 	checklistNameEditInput.type = "text";
-	checklistNameEditInput.placeholder = "Checklist";
+	checklistNameEditInput.placeholder = "CheckList";
 	checklistNameEditInput.style.flexGrow = 1;
 
 	let checkListNameEditSaveBtn = document.createElement('div');
@@ -687,7 +687,7 @@ function renderListChecklist(listChecklist) {
 	}
 }
 
-//Cập nhật thanh trạng thái cho tung Checklist
+//Cập nhật thanh trạng thái cho tung CheckList
 function updateTodoList(todoList) {
 	let numberOfItems = todoList.childNodes[2].childElementCount;
 	let numberOfComplete = 0;
