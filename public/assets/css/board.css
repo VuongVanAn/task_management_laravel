@@ -258,3 +258,27 @@
 .unchange-btn:hover i {
     color: var(--gray-ver4);
 }
+
+.item-member-list-box {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+}
+
+.item-member-list-box:hover,
+.item-member-add-to-list-img:hover {
+    background-color: #f4f5f7;
+    cursor: pointer;
+}
+
+.item-member-list-box-img {
+    display: flex;
+    margin-right: 8px;
+}
+
+.item-member-list-box-img > img,
+.item-member-add-to-list-img > img {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+}

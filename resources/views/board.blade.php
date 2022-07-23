@@ -260,7 +260,7 @@
                     <div class="window-side-bar">
                         <div class="extend">
                             <span>Thêm thẻ</span>
-                            <div id="add-member-btn" class="extend-btn hide">
+                            <div id="add-member-btn" class="extend-btn">
                                 <span><i class="far fa-user"></i></span>
                                 <span>Thêm thành viên</span>
                             </div>
@@ -293,10 +293,32 @@
                                 <span style="margin-left: 5px;">Xóa</span>
                             </div>
                         </div>
+
+                        <div id="item-member-add-to-list">
+
+                        </div>
                     </div>
 
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Popup thêm thành viên -->
+    <div id="new-member-list-box" class="new-todo-list-box hide">
+        <div class="new-todo-list-label">
+            <span>Thêm thành viên</span>
+        </div>
+        <div class="popup-horizontal"></div>
+        <input id="new-member-list-box-input" type="text" class="new-todo-list-input" spellcheck="false"
+               placeholder="Tìm kiếm thành viên...">
+        <div class="new-todo-list-control" style="display: flex;width: 100%">
+            <ul id="list-item-member-list-box" style="list-style-type: none; width: 100%;">
+
+            </ul>
+        </div>
+        <div id="new-member-list-box-cancel" class="unchange-btn">
+            <i class="fas fa-times"></i>
         </div>
     </div>
 

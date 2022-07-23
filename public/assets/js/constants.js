@@ -6,6 +6,7 @@ const COMMENT = "comment";
 const ATTACHMENT = "attachment";
 const CHECKLIST = "checklist";
 const USER = "user";
+const SHAREDATA = "sharedata";
 
 //Phương thức
 const GET = "GET";

@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\User\IUserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
+    public function __construct(IUserRepository $userRepository)
+    {
+        parent::__construct($userRepository);
+    }
+
+    public function index()
+    {
+        return parent::findAll('is_deleted', null);
+    }
+
     public function profile()
     {
         $user = Auth::user();
@@ -37,4 +48,8 @@ class UserController extends Controller
         }
     }
 
+    protected function beforeSave(Request $request, $fieldValue)
+    {
+
+    }
 }

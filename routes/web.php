@@ -23,6 +23,7 @@ Route::get('/board/{id}', 'GeneralController@main');
 Route::get('/home', 'GeneralController@home');
 
 Route::get('/profile', 'UserController@profile');
+Route::get('/users', 'UserController@index');
 Route::post('/users', 'UserController@updateAvatar');
 
 Route::group(['prefix' => 'boards'], function () {
@@ -75,11 +76,14 @@ Route::group(['prefix' => 'boards'], function () {
                 Route::put('/{commentId}', 'CommentController@updateComment');
                 Route::delete('/{commentId}', 'CommentController@deleteComment');
             });
-
         });
-
     });
 
+    Route::group(['prefix' => '/{taskId}/sharedatas'], function () {
+        Route::get('/', 'ShareDataController@index');
+        Route::post('/', 'ShareDataController@saveShareData');
+        Route::delete('/', 'ShareDataController@deleteShareData');
+    });
 });
 
 Auth::routes();

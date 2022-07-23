@@ -90,11 +90,15 @@ function handleAPI(url, data, method, type) {
                     case POST:
                         renderComment(response?.data, new Date());
                         break;
+                    default:
+                        break;
                 }
             } else if (type === ATTACHMENT) {
                 switch (method) {
                     case POST:
                         renderAttachment(response?.data);
+                        break;
+                    default:
                         break;
                 }
             } else if (type === CHECKLIST) {
@@ -104,6 +108,22 @@ function handleAPI(url, data, method, type) {
                         break;
                     case PUT:
                         console.log(response);
+                        break;
+                    default:
+                        break;
+                }
+            } else if (type === USER) {
+                switch (method) {
+                    case GET:
+                        const data = response?.data;
+                        renderMember(data);
+                        break;
+                    default:
+                        break;
+                }
+            } else if (type === SHAREDATA) {
+                switch (method) {
+                    case POST:
                         break;
                 }
             }

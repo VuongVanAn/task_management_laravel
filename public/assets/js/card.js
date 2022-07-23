@@ -356,6 +356,55 @@ attachmentCancelBtn.addEventListener('click', function () {
 	newAttachmentInput.value = "";
 });
 
+//Thêm thành viên
+let newMemberListBox = document.getElementById('new-member-list-box');
+let newMemberListBoxInput = document.getElementById('new-member-list-box-input');
+let newMemberListCloseBtn = document.getElementById('new-member-list-box-cancel');
+let listItemMemberListBox = document.getElementById('list-item-member-list-box');
+let itemMemberAddToList = document.getElementById('item-member-add-to-list');
+
+//Nạp danh sách thành viên
+function renderMember(users) {
+	listItemMemberListBox.innerHTML = '';
+	users.forEach(user => {
+		let newItemMember = document.createElement('li');
+		newItemMember.className = "item-member-list-box";
+		newItemMember.setAttribute('data-id-member', user.id);
+
+		let itemMemberImg = document.createElement('span');
+		itemMemberImg.className = "item-member-list-box-img";
+		let itemImage = document.createElement('img');
+		itemImage.src = "asserts/avatars/" + user?.avatar;
+		itemMemberImg.appendChild(itemImage);
+
+		let itemMemberName = document.createElement('span');
+		itemMemberName.style.display = "block";
+		itemMemberName.innerText = user?.name;
+		newItemMember.appendChild(itemMemberImg);
+		newItemMember.appendChild(itemMemberName);
+
+		newItemMember.addEventListener('click', function () {
+			let taskId = cardInfo.getAttribute('data-id-card');
+			let url = "/boards/" + taskId + "/sharedatas";
+			let data = setTokenToData("user_id", user?.id);
+			handleAPI(url, data, "POST", "sharedata");
+			newMemberListBox.classList.toggle('hide');
+			newMemberListBoxInput.value = "";
+			renderShareData(user);
+		});
+		listItemMemberListBox.appendChild(newItemMember);
+	});
+}
+
+function renderShareData(user) {
+	let itemMemberImg = document.createElement('span');
+	itemMemberImg.className = "item-member-add-to-list-img";
+	itemMemberImg.setAttribute('data-id-member-to-list', user.id);
+	let itemImage = document.createElement('img');
+	itemImage.src = user?.avatar;
+	itemMemberImg.appendChild(itemImage);
+	itemMemberAddToList.appendChild(itemMemberImg);
+}
 
 //Hiển thị danh sách task con
 let listTodoList = document.getElementById('list-todo-list');
@@ -752,6 +801,10 @@ newTodoListCloseBtn.addEventListener('click', function () {
 	newTodoListBoxInput.value = "";
 });
 
+newMemberListCloseBtn.addEventListener('click', function () {
+	newMemberListBox.classList.toggle('hide');
+	newMemberListBoxInput.value = "";
+});
 
 //Hiển thi các comment
 let listComment = document.getElementById('list-comment');
@@ -938,6 +991,16 @@ deleteCardBtn.addEventListener('click', function () {
 	deleteCard(cardInfo.getAttribute('data-id-list'), cardInfo.getAttribute('data-id-card'));
 	windowOverlay.classList.toggle('hide');
 	clearDetail();
+});
+
+addMemberBtn.addEventListener('click', function () {
+	// Nạp người dùng
+	handleAPI("/users", null, "GET", "user");
+	newMemberListBox.classList.toggle('hide');
+	let top = this.getBoundingClientRect().top;
+	let left = this.getBoundingClientRect().left;
+	newMemberListBox.style.top = top + "px";
+	newMemberListBox.style.left = left + "px";
 });
 
 addTodoBtn.addEventListener('click', function () {

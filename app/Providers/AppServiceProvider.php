@@ -12,8 +12,12 @@ use App\Repositories\Comment\CommentRepository;
 use App\Repositories\Comment\ICommentRepository;
 use App\Repositories\Lists\IListsRepository;
 use App\Repositories\Lists\ListsRepository;
+use App\Repositories\ShareData\IShareDataRepository;
+use App\Repositories\ShareData\ShareDataRepository;
 use App\Repositories\Task\ITaskRepository;
 use App\Repositories\Task\TaskRepository;
+use App\Repositories\User\IUserRepository;
+use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -64,6 +68,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             ITaskRepository::class,
             TaskRepository::class
+        );
+
+        $this->app->singleton(
+            IUserRepository::class,
+            UserRepository::class
+        );
+
+        $this->app->singleton(
+            IShareDataRepository::class,
+            ShareDataRepository::class
         );
     }
 }
