@@ -47,7 +47,7 @@
             </div>
 
 			<div class="nav-icons-right">
-                <div class="nav-plus">
+                <div class="nav-plus" id="nav-plus">
                     <a href="#" class="nav-btn">
                         <i class="fa fa-plus"></i>
                     </a>
@@ -178,7 +178,7 @@
 		<div class="popup_box hide">
 			<div class="modal-delete">
 				<i class="fas fa-exclamation"></i>
-				<h1>Bạn có chắc chắn muốn xóa bảng MicroServices?</h1>
+				<h1 class="popup-box-title"></h1>
 				<div class="btns">
 					<a href="#" class="btn1">Hủy</a>
 					<a href="#" class="btn2">Xóa</a>

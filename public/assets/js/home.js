@@ -1,3 +1,4 @@
+let navPlusBtn = document.getElementById('nav-plus');
 let newBoardBtn = document.getElementById('new-board');
 let popup = document.getElementById('popup');
 let saveBoardBtn = document.getElementById('save-board');
@@ -7,6 +8,7 @@ let inputNameBoard = document.getElementById('input-name-board');
 
 let popupAction = document.getElementById('popup-action');
 let popupBox = document.querySelector('.popup_box');
+let popupBoxTitle = document.querySelector('.popup-box-title');
 let changeTitleBtn = document.getElementById('change-title-btn');
 let deleteBoardBtn = document.getElementById('delete-board-btn');
 let changeAvatarBtn = document.getElementById('camera');
@@ -96,6 +98,22 @@ newBoardBtn.addEventListener('click', function() {
     }
 });
 
+navPlusBtn.addEventListener('click', function() {
+    saveBoardBtn.innerHTML = 'Tạo bảng';
+    if (popup.classList.contains('hide')) {
+        popup.classList.toggle('hide');
+        inputNameBoard.focus();
+
+        inputNameBoard.oninput = function(e) {
+            if (e.target.value) {
+                saveBoardBtn.classList.add('active');
+            } else {
+                saveBoardBtn.classList.remove('active');
+            }
+        }
+    }
+});
+
 function setInputText(title) {
     inputNameBoard.value = title;
 }
@@ -139,7 +157,7 @@ saveBoardBtn.addEventListener('click', function(e) {
 deleteBoardBtn.addEventListener('click', function() {
     popupAction.classList.add('hide');
     if (popupBox.classList.contains('hide')) {
-        console.log(handleAPI("/boards/" + popupAction.getAttribute('data-id-board'), setTokenToData("", ""), "GET", "board"));
+        handleAPI("/boards/" + popupAction.getAttribute('data-id-board'), setTokenToData("", ""), "GET", "board");
         popupBox.classList.toggle('hide');
     }
 });
@@ -221,6 +239,7 @@ function handleAPI(url, data, method, type) {
                         let splitUrl = url.split('/');
                         if (splitUrl[2] !== "") {
                             setInputText(response?.data?.title);
+                            popupBoxTitle.textContent = "Bạn có chắc chắn muốn xóa bảng " + response?.data?.title + "?";
                         } else {
                             const data = response?.data;
                             for (let i = 0; i < data.length; i++) {

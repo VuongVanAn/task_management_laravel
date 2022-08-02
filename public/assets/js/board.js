@@ -3,6 +3,7 @@ let boardNameEdit = document.getElementById('board-name-edit');
 let boardFav = document.getElementById('board-header-fav ');
 
 let addList = document.getElementById('add-list');
+let navPlusBtn = document.getElementById('nav-plus');
 let openAddList = document.getElementById('open-list-box');
 let listAddControls = document.getElementById('list-add-controls');
 let listCloseBtn = document.getElementById('list-close-btn');
@@ -90,6 +91,11 @@ boardFav.addEventListener("click", function () {
 });
 
 //Hiển thị box cho phép thêm danh sách mới
+navPlusBtn.addEventListener('click', function () {
+	swapElement(openAddList, listAddControls);
+	listNameInput.focus();
+});
+
 openAddList.addEventListener('click', function () {
 	swapElement(openAddList, listAddControls);
 	listNameInput.focus();

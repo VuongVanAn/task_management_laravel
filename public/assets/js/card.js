@@ -374,12 +374,15 @@ function renderMember(users) {
 		let itemMemberImg = document.createElement('span');
 		itemMemberImg.className = "item-member-list-box-img";
 		let itemImage = document.createElement('img');
-		itemImage.src = "asserts/avatars/" + user?.avatar;
+		itemImage.src = "https://www.timkiemnhadat.vn/upload/image/user-default.png";
 		itemMemberImg.appendChild(itemImage);
 
 		let itemMemberName = document.createElement('span');
 		itemMemberName.style.display = "block";
-		itemMemberName.innerText = user?.name;
+		itemMemberName.style.whiteSpace = "nowrap";
+		itemMemberName.style.overflow = "hidden";
+		itemMemberName.style.textOverflow = "ellipsis";
+		itemMemberName.innerText = user?.name + " (" + user?.email + ")";
 		newItemMember.appendChild(itemMemberImg);
 		newItemMember.appendChild(itemMemberName);
 
@@ -396,14 +399,20 @@ function renderMember(users) {
 	});
 }
 
-function renderShareData(user) {
-	let itemMemberImg = document.createElement('span');
-	itemMemberImg.className = "item-member-add-to-list-img";
-	itemMemberImg.setAttribute('data-id-member-to-list', user.id);
-	let itemImage = document.createElement('img');
-	itemImage.src = user?.avatar;
-	itemMemberImg.appendChild(itemImage);
-	itemMemberAddToList.appendChild(itemMemberImg);
+function renderShareData(user, isArray = false) {
+	if (isArray) {
+		itemMemberAddToList.innerHTML = '';
+		user.forEach(item => renderShareData(item));
+	} else {
+		let itemMemberImg = document.createElement('span');
+		itemMemberImg.className = "item-member-add-to-list-img";
+		itemMemberImg.setAttribute('data-id-member-to-list', user.id);
+		itemMemberImg.title = user?.name;
+		let itemImage = document.createElement('img');
+		itemImage.src = "https://www.timkiemnhadat.vn/upload/image/user-default.png";
+		itemMemberImg.appendChild(itemImage);
+		itemMemberAddToList.appendChild(itemMemberImg);
+	}
 }
 
 //Hiển thị danh sách task con
@@ -971,8 +980,16 @@ function renderCardInfo(data) {
 			renderAttachment(data.attachment[i]);
 		}
 	}
+
 	renderListChecklist(data.check_lists);
+
 	renderActivity(data.comments);
+
+	renderShareData(data.users, true);
+
+	const membersTemp = data.members.filter(x => data.users.find(y => y.user_id === x.id));
+	const members = data.members.filter(x => !membersTemp.includes(x));
+	renderMember(members);
 }
 
 //Window side bar

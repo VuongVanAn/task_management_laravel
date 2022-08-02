@@ -8,8 +8,10 @@ use App\Attachment;
 use App\CheckList;
 use App\Comment;
 use App\Repositories\BaseRepository;
+use App\ShareData;
 use App\Task;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class TaskRepository extends BaseRepository implements ITaskRepository
 {
@@ -23,8 +25,7 @@ class TaskRepository extends BaseRepository implements ITaskRepository
     {
         $card = $this->model->find($id);
 
-        $card->members = User::where('id', '=', $card->user_id)
-            ->select('name')->get();
+        $card->members = User::select('id', 'name', 'email')->get();
 
         $card->check_lists = CheckList::where('task_id', '=', $id)
             ->select('id', 'list_checklist', 'name')->get();
@@ -34,6 +35,12 @@ class TaskRepository extends BaseRepository implements ITaskRepository
 
         $card->attachment = Attachment::where('card_id', '=', $id)
             ->select('id', 'content')->get();
+
+        $card->users = DB::table("share_data")
+            ->join('users', 'users.id', '=', 'share_data.user_id')
+            ->select('share_data.id', 'share_data.user_id', 'users.name')
+            ->where('share_data.task_id', '=', $id)
+            ->get();
 
         return $card;
     }

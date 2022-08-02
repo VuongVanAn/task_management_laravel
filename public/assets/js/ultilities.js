@@ -112,15 +112,6 @@ function handleAPI(url, data, method, type) {
                     default:
                         break;
                 }
-            } else if (type === USER) {
-                switch (method) {
-                    case GET:
-                        const data = response?.data;
-                        renderMember(data);
-                        break;
-                    default:
-                        break;
-                }
             } else if (type === SHAREDATA) {
                 switch (method) {
                     case POST:

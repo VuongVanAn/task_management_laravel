@@ -50,7 +50,7 @@
                 <span style="margin-left: 5px">TasksManager</span>
             </div>
 
-            <div class="nav-plus">
+            <div class="nav-plus" id="nav-plus">
                 <a href="#" class="nav-btn">
                     <i class="fa fa-plus"></i>
                 </a>
