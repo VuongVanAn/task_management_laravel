@@ -466,11 +466,24 @@
     right: 0;
 }
 
-.unchange-btn i {
+.productivity-btn,
+.progress-btn {
+    position: absolute;
+    padding: 0;
+    background: none;
+    top: 5px;
+    right: 0;
+}
+
+.unchange-btn i,
+.productivity-btn i,
+.progress-btn i {
     color: var(--gray-ver3);
 }
 
-.unchange-btn:hover i {
+.unchange-btn:hover i,
+.productivity-btn:hover i,
+.progress-btn:hover i {
     color: var(--gray-ver4);
 }
 

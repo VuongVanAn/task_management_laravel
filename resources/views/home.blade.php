@@ -10,6 +10,8 @@
 	<link href="{{ asset('assets/css/general.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/css/home.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/fontawesome/css/all.css') }}" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 
 <body>
@@ -145,9 +147,17 @@
                 <span>Thao tác</span>
             </div>
             <div class="popup-horizontal"></div>
-            <div id="change-title-btn" class="popup-btn">Sửa tên bảng</div>
+            <div id="change-title-btn" class="popup-btn">
+				<span>Sửa tên bảng</span>
+			</div>
             <div id="delete-board-btn" class="popup-btn">
 				<span>Xóa bảng</span>
+			</div>
+			<div id="progress-task-btn" class="popup-btn">
+				<span>Tiến độ công việc</span>
+			</div>
+			<div id="productivity-empl-btn" class="popup-btn">
+				<span>Năng suất nv</span>
 			</div>
             <button id="cancel-actions" class="unchange-btn" type="button"><i class="fas fa-times"></i></button>
         </div>
@@ -182,6 +192,46 @@
 				<div class="btns">
 					<a href="#" class="btn1">Hủy</a>
 					<a href="#" class="btn2">Xóa</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- modal tiến độ công việc -->
+		<div class="popup-progress hide">
+			<div class="modal-body">
+				<button id="close-progress" class="progress-btn" type="button">
+					<i class="fas fa-times"></i>
+				</button>
+				<div class="container" style="width: 85% !important;">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<canvas id="line-chart-progress"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- modal năng suất nhân viên -->
+		<div class="popup-productivity hide">
+			<div class="modal-body">
+				<button id="close-productivity" class="productivity-btn" type="button">
+					<i class="fas fa-times"></i>
+				</button>
+				<div class="container" style="width: 85% !important;">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<canvas id="line-chart-productivity"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -221,6 +271,10 @@
                 handleAPI("/users", setTokenToData("avatar", fileName[0]), "POST", "user");
             }
         });
+
+		// window.onload = function () {
+		//
+		// };
 	</script>
 </body>
 

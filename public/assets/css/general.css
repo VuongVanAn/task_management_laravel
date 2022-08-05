@@ -518,6 +518,16 @@ div {
     border: 1px solid #ffffff;
 }
 
+.popup-productivity,
+.popup-progress{
+    position: absolute;
+    width: 90%;
+    height: 88%;
+    left: 4%;
+    top: 8%;
+    background-color: rgba(0, 0, 0, 0.85);
+}
+
 .popup_box i.fa-exclamation {
     font-size: 60px;
     color: var(--light-red);

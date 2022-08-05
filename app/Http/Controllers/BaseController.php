@@ -64,4 +64,13 @@ abstract class BaseController extends Controller
     }
 
     abstract protected function beforeSave(Request $request, $fieldValue);
+
+    public function customFunc($id, $fieldCustom)
+    {
+        $result = $this->baseRepository->customFunc($id, $fieldCustom);
+        if ($result) {
+            return response()->json(['data' => $result]);
+        }
+        return response()->json(['message' => 'Có lỗi xảy ra'], 400);
+    }
 }

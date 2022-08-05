@@ -29,6 +29,8 @@ Route::post('/users', 'UserController@updateAvatar');
 Route::group(['prefix' => 'boards'], function () {
     Route::get('/', 'BoardController@index');
     Route::post('/', 'BoardController@saveBoard');
+    Route::post('/productivity', 'BoardController@productivityBoard');
+    Route::post('/progress', 'BoardController@progressBoard');
 
     Route::get('/{id}', 'BoardController@findOne');
     Route::put('/{id}', 'BoardController@updateBoard');

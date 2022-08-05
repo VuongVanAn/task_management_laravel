@@ -39,6 +39,14 @@ class BoardController extends BaseController
         return parent::delete($id);
     }
 
+    public function productivityBoard(Request $request) {
+        return parent::customFunc($request->id, 'productivity');
+    }
+
+    public function progressBoard(Request $request) {
+        return parent::customFunc($request->id, 'progress');
+    }
+
     protected function beforeSave(Request $request, $fieldValue)
     {
         $data = $request->all();

@@ -8,7 +8,6 @@ use App\Attachment;
 use App\CheckList;
 use App\Comment;
 use App\Repositories\BaseRepository;
-use App\ShareData;
 use App\Task;
 use App\User;
 use Illuminate\Support\Facades\DB;

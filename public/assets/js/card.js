@@ -72,6 +72,26 @@ cardDateButton.addEventListener('click', function () {
 	$('.datetimepicker').datetimepicker('show');
 });
 
+var expectedDateSection = document.getElementById('expected-date-section');
+var expectedDateText = document.getElementById('expected-date-text');
+$('.expecteddatetimepicker').datetimepicker({
+	step: 30,
+	minDate: 0,
+	onChangeDateTime: function (dp, $input) {
+		let date = new Date($input.val());
+		expectedDateText.innerHTML = setDateText(date, "d/m h:i");
+		expectedDateText.setAttribute('data-expecteddate', setDateText(date, "y-m-d h:i:s"));
+
+		let url = setURLCard(cardInfo.getAttribute('data-id-board'), cardInfo.getAttribute('data-id-list'), cardInfo.getAttribute('data-id-card'));
+		handleAPI(url, setTokenToData("expected_date", setDateText(date, "y-m-d h:i:s")), "PUT", "card");
+	}
+});
+
+let cardExpectedDateBtn = document.getElementById('card-expected-date-button');
+cardExpectedDateBtn.addEventListener('click', function () {
+	$('.expecteddatetimepicker').datetimepicker('show');
+});
+
 //Đặt màu trạng thái cho text hiển thị deadline
 function setStatusClass(date) {
 	let d = new Date(date).getTime();
@@ -411,6 +431,13 @@ function renderShareData(user, isArray = false) {
 		let itemImage = document.createElement('img');
 		itemImage.src = "https://www.timkiemnhadat.vn/upload/image/user-default.png";
 		itemMemberImg.appendChild(itemImage);
+		itemMemberImg.addEventListener('dblclick', function () {
+			itemMemberAddToList.removeChild(itemMemberImg);
+			let taskId = cardInfo.getAttribute('data-id-card');
+			let url = "/boards/" + taskId + "/sharedatas";
+			let data = setTokenToData("user_id", user?.id);
+			handleAPI(url, data, "DELETE", "sharedata");
+		});
 		itemMemberAddToList.appendChild(itemMemberImg);
 	}
 }
@@ -933,6 +960,12 @@ commentInput.addEventListener('focus', function () {
 	}
 });
 
+$('.comment-box .unchange-btn')[0].addEventListener('click', function () {
+	if (!commentControl.classList.contains('hide')) {
+		commentControl.classList.add('hide');
+	}
+});
+
 //Tạo comment mới
 commentControl.firstElementChild.addEventListener('click', function () {
 	if (commentInput.value !== "") {
@@ -971,6 +1004,8 @@ function renderCardInfo(data) {
 	cardInfo.setAttribute('data-id-board', board.getAttribute('data-id-board'));
 	cardInfo.setAttribute('data-id-list', data.lists_id);
 	cardInfo.setAttribute('data-id-card', data.id);
+	expectedDateText.innerHTML = setDateText(data?.expected_date, "d/m h:i");
+	expectedDateText.setAttribute('data-expecteddate', setDateText(data?.expected_date, "y-m-d h:i:s"));
 
 	renderDeadline(data.dead_line, data.status);
 	renderDescription(data.description);

@@ -35,4 +35,11 @@ interface IBaseRepository
      * Xóa dữ liệu
      */
     public function delete($id);
+
+    /**
+     * @param $id
+     * @param $fieldCustom
+     * Lấy dữ liệu tùy theo bảng
+     */
+    public function customFunc($id, $fieldCustom);
 }

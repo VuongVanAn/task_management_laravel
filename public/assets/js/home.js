@@ -11,9 +11,15 @@ let popupBox = document.querySelector('.popup_box');
 let popupBoxTitle = document.querySelector('.popup-box-title');
 let changeTitleBtn = document.getElementById('change-title-btn');
 let deleteBoardBtn = document.getElementById('delete-board-btn');
+let productivityEmplBtn = document.getElementById('productivity-empl-btn');
+let closeProductivityPopup = document.getElementById('close-productivity');
+let progressTaskBtn = document.getElementById('progress-task-btn');
+let closeProgressTaskPopup = document.getElementById('close-progress');
 let changeAvatarBtn = document.getElementById('camera');
 let colorPalette = document.getElementById('avatar-picker');
 let avatar = document.getElementById('avatar');
+let popupProductivity = document.querySelector('.popup-productivity');
+let popupProgressTask = document.querySelector('.popup-progress');
 
 let colorIndex = 0;
 
@@ -162,6 +168,194 @@ deleteBoardBtn.addEventListener('click', function() {
     }
 });
 
+productivityEmplBtn.addEventListener('click', function () {
+    popupAction.classList.add('hide');
+    if (popupProductivity.classList.contains('hide')) {
+        let id = popupAction.getAttribute('data-id-board');
+        handleAPI("/boards/productivity", setTokenToData("id", id), "POST", "board");
+        popupProductivity.classList.toggle('hide');
+    }
+});
+
+closeProductivityPopup.addEventListener('click', function () {
+    popupProductivity.classList.toggle('hide');
+});
+
+function renderProductivity(data) {
+    data.users.map(x => {
+        x['completed'] = 0;
+        x['pending'] = 0;
+    })
+
+    data.tasks.forEach(x => {
+        const user = data.users.find(y => x.user_id === y.id);
+        if (user) {
+            user[x.status]++;
+        }
+    });
+
+    const users = data.users.filter(x => x?.completed > 0 || x?.pending > 0);
+    var labels = [];
+    var dataCompleted = [];
+    var dataPending = [];
+    users.forEach(x => {
+        labels.push(x?.name);
+        dataCompleted.push(x?.completed);
+        dataPending.push(x?.pending);
+    });
+
+    Chart.defaults.global.defaultFontColor = '#FFFFFF';
+    Chart.defaults.global.defaultFontFamily = 'Arial';
+    var lineChart = document.getElementById('line-chart-productivity');
+    var myChart = new Chart(lineChart, {
+        type: 'line',
+        data: {
+            labels: [...labels],
+            datasets: [
+                {
+                    label: 'Hoàn thành',
+                    data: [...dataCompleted],
+                    backgroundColor: 'rgba(252, 252, 252, 0.5)',
+                    borderColor: 'rgba(5, 255, 5, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Đang xử lý',
+                    data: [...dataPending],
+                    backgroundColor: 'rgba(252, 252, 252, 0.5)',
+                    borderColor: 'rgba(252, 3, 3, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+        }
+    });
+}
+
+progressTaskBtn.addEventListener('click', function () {
+    popupAction.classList.add('hide');
+    if (popupProgressTask.classList.contains('hide')) {
+        let id = popupAction.getAttribute('data-id-board');
+        handleAPI("/boards/progress", setTokenToData("id", id), "POST", "board");
+        popupProgressTask.classList.toggle('hide');
+    }
+});
+
+closeProgressTaskPopup.addEventListener('click', function () {
+    popupProgressTask.classList.toggle('hide');
+});
+
+function renderProgressTask(data) {
+    var month = 12;
+    var labels = [];
+    var dataCompleted = [];
+    var dataPending = [];
+
+    const colorCompleted = 'rgba(5, 255, 5, 1)';
+    const colorPending = 'rgba(252, 3, 3, 1)';
+    const colorSchedule = 'rgba(10, 80, 245, 1)';
+    var borderCorlorCompleted = [];
+    var borderCorlorPending = [];
+
+    data?.tasks.forEach(x => {
+        if (x?.expected_date != null && x?.dead_line != null) {
+            labels.push(x?.title);
+            borderCorlorCompleted.push(colorSchedule);
+            if (x?.status === 'completed') {
+                borderCorlorPending.push(colorCompleted);
+            } else {
+                borderCorlorPending.push(colorPending);
+            }
+
+            const timeComplete = {
+                t: x?.expected_date,
+                y: x?.expected_date
+            }
+            dataCompleted.push(timeComplete);
+            const timePending = {
+                t: x?.dead_line,
+                y: x?.dead_line
+            }
+            dataPending.push(timePending);
+            const monthChoose = new Date(x?.expected_date).getMonth() < new Date(x?.dead_line).getMonth()
+                                ? new Date(x?.expected_date).getMonth() + 1 : new Date(x?.dead_line).getMonth() + 1;
+            month = month < monthChoose ? month : monthChoose;
+        }
+    });
+
+    var timeInit = "";
+    if (month < 10) {
+        timeInit = "2022-0" + month + "-01";
+    } else {
+        timeInit = "2022-" + month + "-01";
+    }
+
+    labels = [timeInit, ...labels];
+    dataCompleted = [
+        {
+            t: timeInit,
+            y: timeInit
+        },
+        ...dataCompleted
+    ];
+    dataPending = [
+        {
+            t: timeInit,
+            y: timeInit
+        },
+        ...dataPending
+    ];
+
+    borderCorlorCompleted = [colorSchedule, ...borderCorlorCompleted];
+    borderCorlorPending = [colorPending, ...borderCorlorPending];
+
+    Chart.defaults.global.defaultFontColor = '#FFFFFF';
+    Chart.defaults.global.defaultFontFamily = 'Arial';
+    var lineChart = document.getElementById('line-chart-progress');
+    var myChart = new Chart(lineChart, {
+        type: 'line',
+        data: {
+            labels: [...labels],
+            datasets: [
+                {
+                    label: 'Dự kiến',
+                    data: [...dataCompleted],
+                    backgroundColor: [
+                        'rgba(252, 252, 252, 0.5)'
+                    ],
+                    borderColor: [...borderCorlorCompleted],
+                    borderWidth: 1
+                },
+                {
+                    label: 'Đang thực hiện',
+                    data: [...dataPending],
+                    backgroundColor: [
+                        'rgba(252, 252, 252, 0.5)'
+                    ],
+                    borderColor: [...borderCorlorPending],
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    type: 'time',
+                    distribution: 'linear'
+                }]
+            }
+        }
+    });
+}
+
 popupBox.querySelector('.btns .btn1').addEventListener('click', function() {
     popupBox.classList.toggle('hide');
 });
@@ -248,8 +442,20 @@ function handleAPI(url, data, method, type) {
                         }
                         break;
                     case POST:
-                        renderBoard(response?.data?.id, response?.data?.title);
-                        showAlertMessage(ADD_BOARD_SUCCESS, true);
+                        let spiltBoardUrl = url.split('/');
+                        if (spiltBoardUrl[2] !== "") {
+                            switch (spiltBoardUrl[2]) {
+                                case "productivity":
+                                    renderProductivity(response?.data);
+                                    break;
+                                case 'progress':
+                                    renderProgressTask(response?.data);
+                                    break;
+                            }
+                        } else {
+                            renderBoard(response?.data?.id, response?.data?.title);
+                            showAlertMessage(ADD_BOARD_SUCCESS, true);
+                        }
                         break;
                     case PUT:
                         updateBoard(response?.data?.id, response?.data?.title);

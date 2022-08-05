@@ -97,4 +97,13 @@ abstract class BaseRepository implements IBaseRepository
         }
         return false;
     }
+
+    /**
+     * @param $id
+     * @param $fieldCustom
+     * Lấy dữ liệu tùy theo bảng
+     */
+    public function customFunc($id, $fieldCustom) {
+
+    }
 }

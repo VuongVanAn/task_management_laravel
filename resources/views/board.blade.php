@@ -15,7 +15,7 @@
     <link href="{{ asset('assets/css/card.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/fontawesome/css/all.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.datetimepicker.min.css') }}">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 
 <body>
@@ -127,8 +127,18 @@
                 <div id="window-main-col" class="window-main-content">
                     <div class="window-main-col">
 
-                        <!-- Hiển thị deadline -->
+                        <!-- Hiển thị dự kiến - deadline -->
                         <div id="card-detail" class="window-module card-detail">
+                            <div id="expected-date-section" class="card-detail-item">
+                                <span class="card-detail-item-header">Dự kiến</span>
+                                <div class="card-detail-due-date">
+                                    <div id="card-expected-date-button" class="card-date-button" style="margin-left: 0;">
+                                        <span id="expected-date-text" class="date-text"></span>
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div id="date-section" class="card-detail-item hide">
                                 <span class="card-detail-item-header">Hạn chót</span>
                                 <div class="card-detail-due-date">
@@ -323,6 +333,10 @@
     </div>
 
     <!-- Popup chọn ngày giờ-->
+    <div id="expecteddatetimepicker" class="expecteddatetimepicker">
+
+    </div>
+
     <div id="datetimepicker" class="datetimepicker">
 
     </div>
